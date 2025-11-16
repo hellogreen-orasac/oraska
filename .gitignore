@@ -1,0 +1,20 @@
+﻿# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env
+
+# Model checkpoints, temporary files
+checkpoints/
+*.pt
+*.pth
+*.bin
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+ 
+ 

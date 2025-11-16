@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: oraska
+      POSTGRES_USER: oraska
+      POSTGRES_PASSWORD: oraska_secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+  
+  oraska:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://oraska:oraska_secret@postgres:5432/oraska
+      - REDIS_URL=redis://redis:6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - .:/app
+      - ./alembic.ini:/app/alembic.ini   
+      - ./checkpoints:/app/checkpoints
+    command: sh -c "alembic upgrade head && uvicorn oraska.main:app --host 0.0.0.0 --port 8000"
+
+volumes:
+  postgres_data:
+  redis_data:
