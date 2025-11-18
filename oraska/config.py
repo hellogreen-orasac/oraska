@@ -30,4 +30,17 @@ class Config(BaseSettings):
         env_file = ".env"
         env_file_encoding = 'utf-8'
 
-config = Config()
+class Config(BaseSettings):
+    # ... 现有配置 ...
+    
+    # 新增: RL 训练超参数
+    CRITIC_LR_MULTIPLIER: float = 3.0  # Critic 学习率是 Actor 的3倍
+    EXPLORATION_NOISE: float = 0.1      # 探索噪声
+    
+    # 新增: 记忆系统配置
+    CAUSAL_FILTER_ENABLED: bool = True  # 启用因果过滤
+    TIME_DECAY_LAMBDA: float = 0.01     # 时间衰减系数
+    
+    # 新增: 模型路由配置
+    ENABLE_MODEL_ENSEMBLE: bool = False  # 是否启用模型集成
+    UCB_EXPLORATION_COEF: float = 1.0    # UCB 探索系数
