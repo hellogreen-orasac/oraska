@@ -1,6 +1,19 @@
 import requests
 import json
 
+# --- Monkey patch LLMInterface ---
+from oraska.agents.llm_interface import LLMInterface
+
+async def generate_patch(self, prompt, **kwargs):
+    # 简单返回模拟计划，Oraska 执行时不会报错
+    return {
+        "plan": f"[Simulated plan for prompt]: {prompt}",
+        "choices": [{"text": prompt}]
+    }
+
+LLMInterface.generate = generate_patch
+# --- End patch ---
+
 API_URL = "http://localhost:8000/tasks/execute"
 
 def send_task(description: str, task_id: str = None):

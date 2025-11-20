@@ -16,3 +16,5 @@ tenacity==8.2.3
 pytest==7.4.3
 sentence-transformers==2.2.2
 rouge-score==0.1.2
+openai
+anthropic
