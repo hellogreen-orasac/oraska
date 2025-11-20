@@ -1,4 +1,4 @@
-# Oraska v9.2.2 - All Critical Bugs Fixed
+# Oraska v9.2.2
 
 ## Critical Fixes Applied
 
